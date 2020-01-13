@@ -35,7 +35,11 @@
     <div></div>
     <div class="table-div">
       <table class="table">
-        <tr colspan="2" class="thead">And the Winner is:</tr>
+        <tr  class="thead">
+          <thead>
+          And the Winner is:
+          </thead>
+        </tr>
         <tr>
           <td>PERSON</td>
           <td>COMPY</td>
@@ -145,6 +149,7 @@ export default {
     },
 
     onSubmit: function() {
+      if (this.selection != "Pick One"){
       this.gameCount++;
       let pScore = this.pWin;
       let cScore = this.cWin;
@@ -175,6 +180,7 @@ export default {
           tCount++;
           this.tieCount = tCount;
         
+      }
       }
     },
     onReset: function() {
@@ -231,15 +237,18 @@ a {
 }
 .table-div {
   text-align: center;
+  
 }
-.table {
+.table, .thead, td {
   text-align: center;
   margin: auto;
-  border: #42b983;
-  color: #42b983;
+  border: 1px solid #42b983;
+  border-collapse: collapse
+  
 }
-.t-head {
+.thead {
+  align-self: auto;
   text-align: center;
-  background-color: #42b983;
+  background-color: rgba(120, 6, 219, 0.5);
 }
 </style>
