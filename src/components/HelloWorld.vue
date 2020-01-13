@@ -6,11 +6,17 @@
       <button class="rock" @click="rockCounter">Rock</button>
       -->
 
-      <img class="paper" src="../assets/printerpaper.png" alt="paper" width="30%" @click="paperCounter" />
+      <img
+        class="paper"
+        src="../assets/printerpaper.png"
+        alt="paper"
+        width="30%"
+        @click="paperCounter"
+      />
       <!--
       <button class="paper" @click="paperCounter">Paper</button>
       -->
-      <img class="scissors" src="../assets/safetyscissors.png" width="40%" @click="scissorsCounter"  />
+      <img class="scissors" src="../assets/safetyscissors.png" width="40%" @click="scissorsCounter" />
       <!--
       <button class="scissors" @click="scissorsCounter">Scissors</button>
       -->
@@ -25,32 +31,28 @@
       <h1>Computer Plays:</h1>
       <h2>{{compSelection}}</h2>
       <h3>{{winner}}</h3>
-    </div >
-  <div>
-  </div>
+    </div>
+    <div></div>
     <div class="table-div">
-    <table class="table">
-      <tr colspan="2" class = "thead">And the Winner is:</tr>
-      <tr>
-        <td>PERSON</td>
-        <td>COMPY</td>
-      </tr>
-      <tr>
-        <td>{{pWin}}</td>
-        <td>{{cWin}}</td>
-      </tr>
-    </table>
+      <table class="table">
+        <tr colspan="2" class="thead">And the Winner is:</tr>
+        <tr>
+          <td>PERSON</td>
+          <td>COMPY</td>
+        </tr>
+        <tr>
+          <td>{{pWin}}</td>
+          <td>{{cWin}}</td>
+        </tr>
+      </table>
     </div>
     <button type="submit" @click="onReset">Reset?</button>
-  
-  <div>
-   Games: {{gameCount}}  Ties: {{tieCount}}
-  </div>
+
+    <div>Games: {{gameCount}} Ties: {{tieCount}}</div>
   </div>
 </template>
 
 <script>
-
 //
 //let apiKey = 318de766-f86f-4711-b977-1b357ca83442
 export default {
@@ -143,10 +145,10 @@ export default {
     },
 
     onSubmit: function() {
-      this.gameCount++
-      let pScore=this.pWin
-      let cScore=this.cWin    
-      let tCount=this.tieCount
+      this.gameCount++;
+      let pScore = this.pWin;
+      let cScore = this.cWin;
+      let tCount = this.tieCount;
       let choice = Math.floor(Math.random() * 100);
       if (choice >= 0 && choice < 33) {
         this.compSelection = "ROCK";
@@ -161,7 +163,6 @@ export default {
       ) {
         pScore++;
         this.pWin = pScore;
-        
       }
       if (
         this.winner ==
@@ -169,20 +170,20 @@ export default {
       ) {
         cScore++;
         this.cWin = cScore;
-
-        if (this.winner == "TIE!"){
-          tCount++
-          this.tieCount = tCount
-        }
+      }
+        if (this.winner == "TIE!") {
+          tCount++;
+          this.tieCount = tCount;
         
       }
     },
-    onReset: function(){
-      this.gameCount=0;
-      this.pWin=0;
-      this.cWin=0;
-      this.compSelection="?"
-      this.selection="Pick One"
+    onReset: function() {
+      this.gameCount = 0;
+      this.tieCount = 0;
+      this.pWin = 0;
+      this.cWin = 0;
+      this.compSelection = "?";
+      this.selection = "Pick One";
     }
   }
 };
@@ -208,11 +209,10 @@ export default {
   border-radius: 5px;
 }
 .scissors {
-  padding:none;
+  padding: none;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  
 }
 
 h3 {
@@ -229,19 +229,17 @@ li {
 a {
   color: #42b983;
 }
-.table-div{
+.table-div {
   text-align: center;
 }
 .table {
   text-align: center;
   margin: auto;
-  border:#42b983;
+  border: #42b983;
   color: #42b983;
-  
 }
-  .t-head{
-    text-align: center;
-    background-color: #42b983;
-  }
-
+.t-head {
+  text-align: center;
+  background-color: #42b983;
+}
 </style>
