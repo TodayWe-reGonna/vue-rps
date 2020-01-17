@@ -1,10 +1,21 @@
 <template>
   <div class="hello">
+    <label for="roundsNumber">
+      <h2>How Many Rounds do you want to play?</h2>
+    </label>
+    <div>
+      <select name="gameNumber" v-model="bestOf" style="width:auto">
+        <option value="0">--Select Number of Rounds--</option>
+        <option value="3">Best 2 out of 3</option>
+        <option value="5">Best 3 out of 5</option>
+        <option value="7">Best 4 out of 7</option>
+      </select>
+      <br />
+      {{bestOf}} {{compPlays}}
+      <button @click="getNums">Let's Go</button>
+    </div>
     <div class="button-row">
       <img class="rock" src="../assets/therock.png" alt="rock" width="25%" @click="rockCounter" />
-      <!--
-      <button class="rock" @click="rockCounter">Rock</button>
-      -->
 
       <img
         class="paper"
@@ -13,13 +24,8 @@
         width="30%"
         @click="paperCounter"
       />
-      <!--
-      <button class="paper" @click="paperCounter">Paper</button>
-      -->
+
       <img class="scissors" src="../assets/safetyscissors.png" width="40%" @click="scissorsCounter" />
-      <!--
-      <button class="scissors" @click="scissorsCounter">Scissors</button>
-      -->
     </div>
     <div>
       <h1>{{selection}}</h1>
@@ -35,10 +41,8 @@
     <div></div>
     <div class="table-div">
       <table class="table">
-        <tr  class="thead">
-          <thead>
-          And the Winner is:
-          </thead>
+        <tr class="thead">
+          <thead>And the Winner is:</thead>
         </tr>
         <tr>
           <td>PERSON</td>
@@ -57,8 +61,10 @@
 </template>
 
 <script>
-//
-//let apiKey = 318de766-f86f-4711-b977-1b357ca83442
+var RandomOrg = require("random-org");
+
+var random = new RandomOrg({ apiKey: "318de766-f86f-4711-b977-1b357ca83442" });
+
 export default {
   name: "HelloWorld",
 
@@ -77,7 +83,9 @@ export default {
       pWin: 0,
       cWin: 0,
       gameCount: 0,
-      tieCount: 0
+      tieCount: 0,
+      bestOf: 0,
+      compPlays: []
     };
   },
 
@@ -107,31 +115,6 @@ export default {
         return undefined;
       }
     }
-
-    /*  pWin: function(){
-      let score = 0;
-      if (this.winner == `${this.selection} beats ${this.compSelection} YOU WIN!'` ){
-        score++;
-      }
-      return score;
-    },
-
-    cWin: function(){
-      let score = 0;
-      if (this.winner == `${this.compSelection} beats ${this.selection} COMPY WINS!`){
-        score++;
-      }
-      return score;
-    }
-
-    /*
-    paperCounter: function(){
-      return this.paperCount+1
-    },
-    scissorsCounter: function(){
-      return this.scissorsCount+1
-    },
-    */
   },
 
   methods: {
@@ -149,38 +132,44 @@ export default {
     },
 
     onSubmit: function() {
-      if (this.selection != "Pick One"){
-      this.gameCount++;
-      let pScore = this.pWin;
-      let cScore = this.cWin;
-      let tCount = this.tieCount;
-      let choice = Math.floor(Math.random() * 100);
-      if (choice >= 0 && choice < 33) {
-        this.compSelection = "ROCK";
-      } else if (choice >= 33 && choice < 66) {
-        this.compSelection = "PAPER";
-      } else if (choice >= 67 && choice < 101) {
-        this.compSelection = "SCISSORS";
-      }
-      //alert(pScore, cScore)
-      if (
-        this.winner == `${this.selection} beats ${this.compSelection} YOU WIN!'`
-      ) {
-        pScore++;
-        this.pWin = pScore;
-      }
-      if (
-        this.winner ==
-        `${this.compSelection} beats ${this.selection} COMPY WINS!`
-      ) {
-        cScore++;
-        this.cWin = cScore;
-      }
+      if (this.selection != "Pick One" && this.compPlays.length>0) {
+        this.gameCount++;
+        let pScore = this.pWin;
+        let cScore = this.cWin;
+        let tCount = this.tieCount;
+
+        let choice = this.compPlays[0]
+        
+
+
+
+       // let choice = Math.floor(Math.random() * 100);
+        if (choice >= 1 && choice < 33) {
+          this.compSelection = "ROCK";
+        } else if (choice >= 33 && choice < 66) {
+          this.compSelection = "PAPER";
+        } else if (choice >= 67 && choice < 101) {
+          this.compSelection = "SCISSORS";
+        }
+        //alert(pScore, cScore)
+        if (
+          this.winner ==
+          `${this.selection} beats ${this.compSelection} YOU WIN!'`
+        ) {
+          pScore++;
+          this.pWin = pScore;
+        }
+        if (
+          this.winner ==
+          `${this.compSelection} beats ${this.selection} COMPY WINS!`
+        ) {
+          cScore++;
+          this.cWin = cScore;
+        }
         if (this.winner == "TIE!") {
           tCount++;
           this.tieCount = tCount;
-        
-      }
+        }
       }
     },
     onReset: function() {
@@ -190,6 +179,15 @@ export default {
       this.cWin = 0;
       this.compSelection = "?";
       this.selection = "Pick One";
+    },
+    getNums: function() {
+      let self = this;
+      random
+        .generateIntegers({ min: 1, max: 100, n: this.bestOf })
+        .then(function(result) {
+          window.console.log(result.random.data);
+          self.compPlays = result.random.data;
+        });
     }
   }
 };
@@ -237,14 +235,14 @@ a {
 }
 .table-div {
   text-align: center;
-  
 }
-.table, .thead, td {
+.table,
+.thead,
+td {
   text-align: center;
   margin: auto;
   border: 1px solid #42b983;
-  border-collapse: collapse
-  
+  border-collapse: collapse;
 }
 .thead {
   align-self: auto;

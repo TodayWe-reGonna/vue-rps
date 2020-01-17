@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@apollographql/graphql-playground-html": "^1.6.24",
+    "axios": "^0.19.1",
     "core-js": "^3.4.4",
+    "random-org": "^2.0.1",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.11"
   },
